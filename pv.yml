@@ -1,0 +1,19 @@
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: gobernetes-pv
+  namespace: go-ws
+  labels:
+    type: local
+  annotations:
+    pv.beta.kubernetes.io/gid: 100
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 0.5Gi
+  accessModes:
+    - ReadOnlyMany
+  hostPath:
+    path: "/tmp/"
+---
