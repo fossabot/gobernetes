@@ -1,0 +1,45 @@
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: go-ws
+  labels:
+    name: go-ws
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: go-ws-lb
+  namespace: go-ws
+spec:
+  selector:
+    app: go-ws
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: go-ws-deployment
+  namespace: go-ws
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-ws
+  template:
+    metadata:
+      labels:
+        app: go-ws
+    spec:
+      containers:
+      - name: go-ws
+        image: aracki/go-web-server
+        imagePullPolicy: Always
+        ports:                                      
+        - containerPort: 8080
+          name: http
+---
