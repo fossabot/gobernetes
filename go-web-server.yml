@@ -1,13 +1,6 @@
 ---
-kind: Namespace
 apiVersion: v1
-metadata:
-  name: go-ws
-  labels:
-    name: go-ws
----
 kind: Service
-apiVersion: v1
 metadata:
   name: go-ws-lb
   namespace: go-ws
@@ -20,8 +13,8 @@ spec:
     targetPort: 8080
   type: LoadBalancer
 ---
-kind: Deployment
 apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: go-ws-deployment
   namespace: go-ws
