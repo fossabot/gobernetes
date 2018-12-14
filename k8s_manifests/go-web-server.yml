@@ -35,11 +35,11 @@ spec:
         ports:                                      
         - containerPort: 8080
           name: http
-        volumeMounts:
-          - mountPath: "/tmp/"
-            name: gobernetes-pv
-      volumes:
-        - name: gobernetes-pv
-          persistentVolumeClaim:
-            claimName: gobernetes-pvc
+#        volumeMounts:
+#          - mountPath: "/tmp/"
+#            name: gobernetes-pv
+#      volumes:
+#        - name: gobernetes-pv
+#          persistentVolumeClaim:
+#            claimName: gobernetes-pvc
 ---
