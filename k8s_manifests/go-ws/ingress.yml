@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: fanout-ingress
+  name: ingress
   namespace: go-ws
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
