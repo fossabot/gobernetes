@@ -6,6 +6,7 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net/http"
 	"os"
 	"os/exec"
@@ -43,12 +44,20 @@ func write(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, err.Error())
 	}
 
-	_, err = f.WriteString("I am black cat")
+	colour := ""
+	rand.Seed(time.Now().UTC().UnixNano())
+	if rand.Intn(2) == 0 {
+		colour = "Black"
+	} else {
+		colour = "White"
+	}
+
+	_, err = f.WriteString(fmt.Sprintf("I'm a %s cat!", colour))
 	if err != nil {
 		fmt.Fprintf(w, err.Error())
 	}
 
-	fmt.Fprintf(w, "Black cat written")
+	fmt.Fprintf(w, "%s cat written", colour)
 }
 
 func cat(w http.ResponseWriter, r *http.Request) {
