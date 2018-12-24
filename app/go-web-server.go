@@ -15,23 +15,36 @@ import (
 	"time"
 )
 
+var filePath = "/tmp/cat"
+
+func respWithHostname(w http.ResponseWriter, msg string) {
+
+	out, err := exec.Command("hostname").Output()
+	if err != nil {
+		log.Fatal("cannot execute hostname: ", err.Error())
+	}
+
+	fmt.Fprintf(w, "Hello, I'm running on %s with an %s CPU. \n My hostname is %s \n"+
+		"----------------------------- \n \n %s",
+		runtime.GOOS, runtime.GOARCH, string(out), msg)
+}
+
 func main() {
+
 	http.HandleFunc("/", hello)
 	http.HandleFunc("/write", writeFile)
-	http.HandleFunc("/delete", rmFile)
+	http.HandleFunc("/remove", rmFile)
 	http.HandleFunc("/cat", readFile)
 	http.HandleFunc("/memleak", memleak)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
-var filePath = "/files/cat"
-
 func hello(w http.ResponseWriter, r *http.Request) {
 
 	out, err := exec.Command("hostname").Output()
 	if err != nil {
-		fmt.Fprintf(w, err.Error())
+		log.Fatal("cannot execute hostname: ", err.Error())
 	}
 
 	fmt.Fprintf(w, "Hello, I'm running on %s with an %s CPU. \n My hostname is %s",
@@ -55,28 +68,33 @@ func writeFile(w http.ResponseWriter, r *http.Request) {
 
 	_, err = f.WriteString(fmt.Sprintf("I'm a %s cat!", colour))
 	if err != nil {
-		fmt.Fprintf(w, err.Error())
+		respWithHostname(w, err.Error())
+		return
 	}
 
-	fmt.Fprintf(w, "%s cat written", colour)
+	respWithHostname(w, fmt.Sprintf("%s cat written", colour))
 }
 
 func rmFile(w http.ResponseWriter, r *http.Request) {
 
 	err := os.Remove(filePath)
 	if err != nil {
-		fmt.Fprintf(w, err.Error())
+		respWithHostname(w, err.Error())
+		return
 	}
+
+	respWithHostname(w, fmt.Sprintf("%s file removed", filePath))
 }
 
 func readFile(w http.ResponseWriter, r *http.Request) {
 
 	out, err := ioutil.ReadFile(filePath)
 	if err != nil {
-		fmt.Fprintf(w, err.Error())
+		respWithHostname(w, err.Error())
+		return
 	}
 
-	fmt.Fprintf(w, "Output from file %s: \n %s", filePath, string(out))
+	respWithHostname(w, fmt.Sprintf("Output from file %s: \n %s", filePath, string(out)))
 }
 
 // memleak example route hit: http://localhost:8080/memleak?megabytes=123&interval=1000
