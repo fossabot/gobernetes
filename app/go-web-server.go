@@ -53,6 +53,11 @@ func hello(w http.ResponseWriter, r *http.Request) {
 
 func writeFile(w http.ResponseWriter, r *http.Request) {
 
+	fp := r.URL.Query().Get("filePath")
+	if fp != "" {
+		filePath = fp
+	}
+
 	f, err := os.Create(filePath)
 	if err != nil {
 		fmt.Fprintf(w, err.Error())
@@ -77,6 +82,11 @@ func writeFile(w http.ResponseWriter, r *http.Request) {
 
 func rmFile(w http.ResponseWriter, r *http.Request) {
 
+	fp := r.URL.Query().Get("filePath")
+	if fp != "" {
+		filePath = fp
+	}
+
 	err := os.Remove(filePath)
 	if err != nil {
 		respWithHostname(w, err.Error())
@@ -87,6 +97,11 @@ func rmFile(w http.ResponseWriter, r *http.Request) {
 }
 
 func readFile(w http.ResponseWriter, r *http.Request) {
+
+	fp := r.URL.Query().Get("filePath")
+	if fp != "" {
+		filePath = fp
+	}
 
 	out, err := ioutil.ReadFile(filePath)
 	if err != nil {
