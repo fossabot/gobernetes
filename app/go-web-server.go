@@ -17,8 +17,9 @@ import (
 
 func main() {
 	http.HandleFunc("/", hello)
-	http.HandleFunc("/write", write)
-	http.HandleFunc("/cat", cat)
+	http.HandleFunc("/write", writeFile)
+	http.HandleFunc("/delete", rmFile)
+	http.HandleFunc("/cat", readFile)
 	http.HandleFunc("/memleak", memleak)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
@@ -37,7 +38,7 @@ func hello(w http.ResponseWriter, r *http.Request) {
 		runtime.GOOS, runtime.GOARCH, string(out))
 }
 
-func write(w http.ResponseWriter, r *http.Request) {
+func writeFile(w http.ResponseWriter, r *http.Request) {
 
 	f, err := os.Create(tempFile)
 	if err != nil {
@@ -60,7 +61,15 @@ func write(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "%s cat written", colour)
 }
 
-func cat(w http.ResponseWriter, r *http.Request) {
+func rmFile(w http.ResponseWriter, r *http.Request) {
+
+	err := os.Remove(tempFile)
+	if err != nil {
+		fmt.Fprintf(w, err.Error())
+	}
+}
+
+func readFile(w http.ResponseWriter, r *http.Request) {
 
 	out, err := ioutil.ReadFile(tempFile)
 	if err != nil {
