@@ -25,7 +25,7 @@ func main() {
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
-var tempFile = "/tmp/cat"
+var filePath = "/files/cat"
 
 func hello(w http.ResponseWriter, r *http.Request) {
 
@@ -40,7 +40,7 @@ func hello(w http.ResponseWriter, r *http.Request) {
 
 func writeFile(w http.ResponseWriter, r *http.Request) {
 
-	f, err := os.Create(tempFile)
+	f, err := os.Create(filePath)
 	if err != nil {
 		fmt.Fprintf(w, err.Error())
 	}
@@ -63,7 +63,7 @@ func writeFile(w http.ResponseWriter, r *http.Request) {
 
 func rmFile(w http.ResponseWriter, r *http.Request) {
 
-	err := os.Remove(tempFile)
+	err := os.Remove(filePath)
 	if err != nil {
 		fmt.Fprintf(w, err.Error())
 	}
@@ -71,12 +71,12 @@ func rmFile(w http.ResponseWriter, r *http.Request) {
 
 func readFile(w http.ResponseWriter, r *http.Request) {
 
-	out, err := ioutil.ReadFile(tempFile)
+	out, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		fmt.Fprintf(w, err.Error())
 	}
 
-	fmt.Fprintf(w, "Output from file %s: \n %s", tempFile, string(out))
+	fmt.Fprintf(w, "Output from file %s: \n %s", filePath, string(out))
 }
 
 // memleak example route hit: http://localhost:8080/memleak?megabytes=123&interval=1000
