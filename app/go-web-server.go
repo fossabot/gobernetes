@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-var filePath = "/tmp/cat"
+var filePath = "/files/cat"
 
 func respWithHostname(w http.ResponseWriter, msg string) {
 
