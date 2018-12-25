@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-ws-deployment
+  namespace: go-ws
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-ws
+  template:
+    metadata:
+      labels:
+        app: go-ws
+    spec:
+      containers:
+        - name: go-ws
+          image: 427405000641.dkr.ecr.eu-west-1.amazonaws.com/go-ws:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              name: http
+          volumeMounts:
+            - mountPath: /files
+              name: files-volume
+      imagePullSecrets:
+        - name: regcred
+      volumes:
+        - name: files-volume
+          hostPath:
+            path: /data
+            type: Directory
