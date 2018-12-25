@@ -23,6 +23,15 @@ spec:
         volumeMounts:
           - mountPath: /files
             name: files-volume
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+        readinessProbe:
+          exec:
+            command:
+            - ls
+            - /files
       volumes:
         - name: files-volume
           hostPath:
