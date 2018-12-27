@@ -27,11 +27,15 @@ spec:
           httpGet:
             path: /
             port: 8080
+          initialDelaySeconds: 1
+          periodSeconds: 3
+          failureThreshold: 3
         readinessProbe:
           exec:
             command:
             - ls
             - /files
+          periodSeconds: 5
       volumes:
         - name: files-volume
           hostPath:
