@@ -9,7 +9,7 @@ metadata:
   name: {{ template "jenkins.fullname" . }}
 spec:
   rules:
-  - host: {{ .Values.Master.HostName | quote }}
+  - host:
     http:
       paths:
       - backend:

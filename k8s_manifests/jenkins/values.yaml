@@ -15,13 +15,13 @@ Master:
   ImagePullPolicy: "Always"
 # ImagePullSecret: jenkins
   Component: "jenkins-master"
-  UseSecurity: true
+  UseSecurity: false
   # SecurityRealm:
   # Optionally configure a different AuthorizationStrategy using Jenkins XML
-  # AuthorizationStrategy: |-
-  #    <authorizationStrategy class="hudson.security.FullControlOnceLoggedInAuthorizationStrategy">
-  #      <denyAnonymousReadAccess>true</denyAnonymousReadAccess>
-  #    </authorizationStrategy>
+  #AuthorizationStrategy: |-
+      #<authorizationStrategy class="hudson.security.FullControlOnceLoggedInAuthorizationStrategy">
+        #<denyAnonymousReadAccess>false</denyAnonymousReadAccess>
+      #</authorizationStrategy>
   HostNetworking: false
   AdminUser: admin
   # AdminPassword: <defaults to random>
@@ -30,8 +30,8 @@ Master:
       cpu: "50m"
       memory: "256Mi"
     limits:
-      cpu: "2000m"
-      memory: "2048Mi"
+      cpu: "800m"
+      memory: "1300Mi"
   # Environment variables that get added to the init container (useful for e.g. http_proxy)
   # InitContainerEnv:
   #   - name: http_proxy
@@ -54,14 +54,14 @@ Master:
   ServicePort: 8080
   # For minikube, set this to NodePort, elsewhere use LoadBalancer
   # Use ClusterIP if your setup includes ingress controller
-  ServiceType: LoadBalancer
+  ServiceType: ClusterIP
   # Master Service annotations
   ServiceAnnotations: {}
   # Master Service Labels
   ServiceLabels: {}
   #   service.beta.kubernetes.io/aws-load-balancer-backend-protocol: https
   # Used to create Ingress record (should used with ServiceType: ClusterIP)
-  # HostName: jenkins.cluster.local
+  HostName: jenkins.cluster.local
   # NodePort: <to set explicitly, choose port between 30000-32767
   # Enable Kubernetes Liveness and Readiness Probes
   # ~ 2 minutes to allow Jenkins to restart when upgrading plugins. Set ReadinessTimeout to be shorter than LivenessTimeout.
@@ -75,8 +75,8 @@ Master:
     - JNLP2-connect
   CSRF:
     DefaultCrumbIssuer:
-      Enabled: true
-      ProxyCompatability: true
+      Enabled: false
+      ProxyCompatability: false
   CLI: false
   # Kubernetes service type for the JNLP slave service
   # SETTING THIS TO "LoadBalancer" IS A HUGE SECURITY RISK: https://github.com/kubernetes/charts/issues/1341
@@ -136,12 +136,14 @@ Master:
 
   Ingress:
     ApiVersion: extensions/v1beta1
-    Annotations: {}
+    Annotations: {
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    }
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
 
     # Set this path to JenkinsUriPrefix above or use annotations to rewrite path
-    # Path: "/jenkins"
+    Path: "/jenkins"
 
     TLS:
     # - secretName: jenkins.cluster.local
@@ -150,7 +152,7 @@ Master:
   AdditionalConfig: {}
 
 Agent:
-  Enabled: true
+  Enabled: false
   Image: jenkins/jnlp-slave
   ImageTag: 3.10-1
   CustomJenkinsLabels: []
@@ -182,7 +184,7 @@ Agent:
   # jenkins-agent: v1
 
 Persistence:
-  Enabled: true
+  Enabled: false
   ## A manually managed Persistent Volume and Claim
   ## Requires Persistence.Enabled: true
   ## If defined, PVC must be created manually before volume will be bound
