@@ -18,7 +18,7 @@ spec:
           image: jenkins/jenkins:lts
           env:
             - name: JAVA_OPTS
-              value: -Xmx2048m -XX:MaxPermSize=1024m -Djenkins.install.runSetupWizard=false
+              value: -Xmx2048m -XX:MaxPermSize=1024m
           ports:
             - name: http-port
               containerPort: 8080
