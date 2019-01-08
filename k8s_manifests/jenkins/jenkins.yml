@@ -30,5 +30,5 @@ spec:
       volumes:
         - name: jenkins-home
           hostPath:
-            path: /data/jenkins_home
+            path: /jenkins_home
             type: Directory
