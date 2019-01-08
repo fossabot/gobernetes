@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+  namespace: monitoring
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+    - host: monitoring.ballab.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: prometheus-k8s
+              servicePort: 9090
