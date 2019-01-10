@@ -36,6 +36,9 @@ spec:
             - ls
             - /files
           periodSeconds: 5
+        resources:
+          limits:
+            memory: "50Mi"
       volumes:
         - name: files-volume
           hostPath:
