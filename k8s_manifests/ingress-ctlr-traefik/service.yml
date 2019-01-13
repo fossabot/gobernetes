@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: traefik
+  name: traefik-ingress-service
+spec:
+  selector:
+    k8s-app: traefik-ingress-lb
+  ports:
+    - protocol: TCP
+      port: 80
+      name: web
+    - protocol: TCP
+      port: 8080
+      name: admin
