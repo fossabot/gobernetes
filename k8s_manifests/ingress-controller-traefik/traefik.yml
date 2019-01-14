@@ -16,7 +16,7 @@ spec:
       terminationGracePeriodSeconds: 60
       containers:
         - name: traefik-ingress-lb
-          image: traefik
+          image: traefik:v1.7.7
           ports:
             - name: http
               containerPort: 80
