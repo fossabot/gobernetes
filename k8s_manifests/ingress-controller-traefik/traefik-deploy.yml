@@ -1,0 +1,32 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: traefik-ingress-controller
+  namespace: traefik
+  labels:
+    k8s-app: traefik-ingress
+spec:
+  selector:
+    matchLabels:
+      k8s-app: traefik-ingress
+  template:
+    metadata:
+      labels:
+        k8s-app: traefik-ingress
+        name: traefik-ingress
+    spec:
+      serviceAccountName: traefik-ingress-controller
+      terminationGracePeriodSeconds: 60
+      containers:
+        - name: traefik-ingress
+          image: traefik:v1.7.7
+          ports:
+            - name: http
+              containerPort: 80
+              hostPort: 80
+            - name: admin
+              containerPort: 8080
+          args:
+            - --api
+            - --kubernetes
+            - --logLevel=INFO
