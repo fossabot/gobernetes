@@ -7,6 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   rules:
+
     - host: raca-prometheus.ballab.com
       http:
         paths:
@@ -14,6 +15,7 @@ spec:
             backend:
               serviceName: prometheus-k8s
               servicePort: 9090
+
     - host: raca-grafana.ballab.com
       http:
         paths:
@@ -21,6 +23,7 @@ spec:
             backend:
               serviceName: grafana
               servicePort: 3000
+
     - host: raca-alert-manager.ballab.com
       http:
         paths:

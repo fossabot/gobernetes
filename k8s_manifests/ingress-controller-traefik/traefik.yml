@@ -4,18 +4,18 @@ metadata:
   name: traefik-ingress-controller
   namespace: traefik
   labels:
-    k8s-app: traefik-ingress-lb
+    k8s-app: traefik-ingress
 spec:
   template:
     metadata:
       labels:
-        k8s-app: traefik-ingress-lb
-        name: traefik-ingress-lb
+        k8s-app: traefik-ingress
+        name: traefik-ingress
     spec:
       serviceAccountName: traefik-ingress-controller
       terminationGracePeriodSeconds: 60
       containers:
-        - name: traefik-ingress-lb
+        - name: traefik-ingress
           image: traefik:v1.7.7
           ports:
             - name: http
