@@ -12,3 +12,7 @@ spec:
       port: 80
       nodePort: 30080
       protocol: TCP
+    - name: tls
+      port: 443
+      nodePort: 30443
+      protocol: TCP
