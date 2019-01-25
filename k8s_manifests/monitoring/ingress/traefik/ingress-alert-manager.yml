@@ -12,22 +12,6 @@ metadata:
 spec:
   rules:
 
-    - host: raca-prometheus.ballab.com
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: prometheus-k8s
-              servicePort: 9090
-
-    - host: raca-grafana.ballab.com
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: grafana
-              servicePort: 3000
-
     - host: raca-alert-manager.ballab.com
       http:
         paths:
@@ -37,7 +21,5 @@ spec:
               servicePort: 9093
   tls:
     - hosts:
-        - raca-prometheus.ballab.com
-        - raca-grafana.ballab.com
         - raca-alert-manager.ballab.com
-      secretName: raca-monitoring-tls
+      secretName: raca-monitoring-alert-manager-tls
