@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: ingress
+  name: ingress-prometheus-alert-manager
   namespace: monitoring
   annotations:
     certmanager.k8s.io/cluster-issuer: issuer-prod
@@ -20,7 +20,16 @@ spec:
               serviceName: prometheus-k8s
               servicePort: 9090
 
+    - host: raca-alert-manager.ballab.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: alertmanager-main
+              servicePort: 9093
+
   tls:
     - hosts:
         - raca-prometheus.ballab.com
-      secretName: raca-monitoring-prometheus-tls
+        - raca-alert-manager.ballab.com
+      secretName: raca-monitoring-tls
