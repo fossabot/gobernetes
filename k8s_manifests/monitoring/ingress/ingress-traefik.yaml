@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+  namespace: monitoring
+  annotations:
+    certmanager.k8s.io/cluster-issuer: letsencrypt-dev
+    certmanager.k8s.io/acme-challenge-type: dns01
+    certmanager.k8s.io/acme-dns01-provider: route53
+    traefik.ingress.kubernetes.io/auth-type: "basic"
+    traefik.ingress.kubernetes.io/auth-secret: "traefik-monitoring-basic-auth"
+spec:
+  rules:
+
+    - host: raca-prometheus.ballab.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: prometheus-k8s
+              servicePort: 9090
+
+    - host: raca-grafana.ballab.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: grafana
+              servicePort: 3000
+
+    - host: raca-alert-manager.ballab.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: alertmanager-main
+              servicePort: 9093
+  tls:
+    - hosts:
+        - raca-prometheus.ballab.com
+        - raca-grafana.ballab.com
+        - raca-alert-manager.ballab.com
+      secretName: raca-monitoring-tls
