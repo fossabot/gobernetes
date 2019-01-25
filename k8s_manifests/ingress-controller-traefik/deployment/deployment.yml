@@ -26,10 +26,15 @@ spec:
               hostPort: 80
             - name: admin
               containerPort: 8080
+          volumeMounts:
+            - mountPath: "/config"
+              name: "config"
           args:
             - --api
             - --kubernetes
             - --logLevel=INFO
-            - --defaultentrypoints=http,https
-            - --entrypoints=Name:https Address::443 TLS
-            - --entrypoints=Name:http Address::80
+            - --configfile=/config/traefik.toml
+      volumes:
+        - name: config
+          configMap:
+            name: traefik-conf
