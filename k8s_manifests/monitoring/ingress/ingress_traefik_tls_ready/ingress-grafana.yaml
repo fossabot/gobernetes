@@ -4,7 +4,7 @@ metadata:
   name: ingress-grafana
   namespace: monitoring
   annotations:
-    certmanager.k8s.io/cluster-issuer: issuer-prod
+    certmanager.k8s.io/cluster-issuer: issuer-staging
     certmanager.k8s.io/acme-challenge-type: dns01
     certmanager.k8s.io/acme-dns01-provider: route53
 spec:
@@ -21,4 +21,4 @@ spec:
   tls:
     - hosts:
         - raca-grafana.ballab.com
-      secretName: raca-monitoring-grafana-tls-prod
+      secretName: raca-monitoring-grafana-tls-staging

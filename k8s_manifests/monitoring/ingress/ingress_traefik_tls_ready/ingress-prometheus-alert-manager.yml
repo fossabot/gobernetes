@@ -4,7 +4,7 @@ metadata:
   name: ingress-prometheus-alert-manager
   namespace: monitoring
   annotations:
-    certmanager.k8s.io/cluster-issuer: issuer-prod
+    certmanager.k8s.io/cluster-issuer: issuer-staging
     certmanager.k8s.io/acme-challenge-type: dns01
     certmanager.k8s.io/acme-dns01-provider: route53
     traefik.ingress.kubernetes.io/auth-type: "basic"
@@ -32,4 +32,4 @@ spec:
     - hosts:
         - raca-prometheus.ballab.com
         - raca-alert-manager.ballab.com
-      secretName: raca-monitoring-tls-prod
+      secretName: raca-monitoring-tls-staging
