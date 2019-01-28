@@ -18,4 +18,4 @@ spec:
   tls:
     - hosts:
         - raca.ballab.com
-      secretName: raca-ballab-com-tls
+      secretName: raca-ballab-com-tls-prod

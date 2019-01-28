@@ -20,4 +20,4 @@ spec:
   tls:
     - hosts:
         - raca-traefik.ballab.com
-      secretName: raca-traefik-ballab-com-tls
+      secretName: raca-traefik-ballab-com-tls-prod
