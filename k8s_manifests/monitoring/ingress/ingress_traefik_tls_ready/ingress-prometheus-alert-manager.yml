@@ -32,4 +32,4 @@ spec:
     - hosts:
         - raca-prometheus.ballab.com
         - raca-alert-manager.ballab.com
-      secretName: raca-monitoring-tls
+      secretName: raca-monitoring-tls-prod

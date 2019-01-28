@@ -21,4 +21,4 @@ spec:
   tls:
     - hosts:
         - raca-grafana.ballab.com
-      secretName: raca-monitoring-grafana-tls
+      secretName: raca-monitoring-grafana-tls-prod
