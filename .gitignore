@@ -1,3 +1,4 @@
 .DS_STORE
 .idea*
 k8s_manifests/monitoring/secrets/alertmanager.yaml
+k8s_manifests/basic_auth_htpasswd
