@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ALERT MANAGER SLACK RECEIVER
-kubectl create -n monitoring secret generic alertmanager-main --from-file=monitoring/secrets/alertmanager.yaml
+kubectl create -n monitoring secret generic alertmanager-main --from-file=alertmanager.yaml
 
 # ROUTE53 ACCESS
 kubectl create -n cert-manager secret generic route53 --from-file=secret_key
@@ -11,5 +11,5 @@ kubectl create -n monitoring secret generic grafana-auth --from-file=grafana-aut
 
 # TRAEFIK.TOML recreation
 kubectl delete -n traefik configmap traefik-conf
-kubectl create -n traefik configmap traefik-conf --from-file=ingress-controller-traefik/deployment_tls_ready/traefik.toml
+kubectl create -n traefik configmap traefik-conf --from-file=../ingress-controller-traefik/deployment_tls_ready/traefik.toml
 
