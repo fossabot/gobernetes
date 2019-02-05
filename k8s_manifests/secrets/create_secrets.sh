@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# ALERT MANAGER SLACK RECEIVER
+# ALERT MANAGER SLACK RECEIVER recreation
+kubectl delete -n monitoring secret alertmanager-main
 kubectl create -n monitoring secret generic alertmanager-main --from-file=alertmanager.yaml
 
 # ROUTE53 ACCESS
