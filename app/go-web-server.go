@@ -153,5 +153,5 @@ func memleak(w http.ResponseWriter, r *http.Request) {
 		}
 	}()
 
-	fmt.Fprintf(w, "memleak running: %dMB / %dms\n", howMany, interval)
+	respWithHostname(w, fmt.Sprintf("memleak running: %dMB / %dms\n", howMany, interval))
 }
