@@ -686,16 +686,16 @@ spec:
       for: 1h
       labels:
         severity: warning
-    - alert: KubeVersionMismatch
-      annotations:
-        message: There are {{ $value }} different versions of Kubernetes components
-          running.
-        runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeversionmismatch
-      expr: |
-        count(count(kubernetes_build_info{job!="kube-dns"}) by (gitVersion)) > 1
-      for: 1h
-      labels:
-        severity: warning
+#    - alert: KubeVersionMismatch
+#      annotations:
+#        message: There are {{ $value }} different versions of Kubernetes components
+#          running.
+#        runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeversionmismatch
+#      expr: |
+#        count(count(kubernetes_build_info{job!="kube-dns"}) by (gitVersion)) > 1
+#      for: 1h
+#      labels:
+#        severity: warning
     - alert: KubeClientErrors
       annotations:
         message: Kubernetes API server client '{{ $labels.job }}/{{ $labels.instance
